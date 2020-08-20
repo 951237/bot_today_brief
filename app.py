@@ -112,6 +112,6 @@ def today_new():
 
 if __name__ == "__main__":
     today_weather()
-    today_english()
-    today_new()
+    # today_english()
+    # today_new()
 
