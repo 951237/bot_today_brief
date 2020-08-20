@@ -4,8 +4,8 @@
 name: Python application
 
 on:
-  schedule :
-    - cron: '*/1 * * * *'
+  schedule:
+    - cron:  '*/3 * * * *'
 
 jobs:
   build:
@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.8
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v1
       with:
         python-version: 3.8
     - name: Install dependencies
@@ -23,8 +23,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: execute
-      env:
-        TELEGRAM_TOKEN : ${{ secrets.TELEGRAM_TOKEN }}
-        CHAT_ID : ${{ secrets.CHAT_ID }}
+      env: 
+        TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+        CHAT_ID: ${{ secrets.CHAT_ID }} 
       run: |
         python app.py
