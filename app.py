@@ -45,9 +45,9 @@ def today_english():
     return result
 
 
-def today_weather(p_url):
+def today_weather(p_region, p_url):
     result = []
-    result.append("===== 오늘의 날씨 =====")
+    result.append(f"===== 오늘의 {p_region}날씨 =====")
     soup = create_soup(p_url)
     div = soup.find("div", attrs={"class": "today_weather"})  # 날씨 전체 구쳑 선택
     weather_area = div.find("div",
@@ -118,11 +118,11 @@ def today_news():
 
 
 if __name__ == "__main__":
-    # URL[0] : 새솔동, URL[1] : 안산시 사동
-    URL = ['https://n.weather.naver.com/today/02590140',
-           'https://n.weather.naver.com/today/02271103']
-    for i in URL:
-        weather_data = today_weather(i)
+    # URL[0] : 새솔동, URL[1] : 안산시 사
+    URL = {'새솔동' : 'https://n.weather.naver.com/today/02590140',
+           '안산' : 'https://n.weather.naver.com/today/02271103'}
+    for k,v in URL.items():
+        weather_data = today_weather(k, v)
         weather = ("\n".join(str(i) for i in weather_data))
         send(weather)
 
