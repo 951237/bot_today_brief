@@ -19,7 +19,8 @@ def create_soup(p_url):
 
 
 def today_english():
-    send("===== 오늘의 영어회화 =====")
+    result =[]
+    result.append("===== 오늘의 영어회화 =====")
     URL = "https://www.hackers.co.kr/?c=s_eng/eng_contents/I_others_english"
     soup = create_soup(URL)
     # 오늘의 회화 주제
@@ -29,17 +30,19 @@ def today_english():
     texts = soup.find_all("div", attrs={"class": "conv_txt"})
     kor_texts = texts[0].find_all('span', attrs={"class": "conv_sub"})  # 한글 지문
     eng_texts = texts[1].find_all('span', attrs={"class": "conv_sub"})  # 영어 지문
-    send(title)
+    result.append(title)
     # 영어지문 출력
-    send('영어 대화')
+    result.append('영어 대화')
     for txt in eng_texts:
-        send(txt.get_text())
-    # send()
+        result.append(txt.get_text())
+    # result.append()
 
     # 한글 지문 출력
-    send('한글 대화')
+    result.append('한글 대화')
     for txt in kor_texts:
-        send(txt.get_text())
+        result.append(txt.get_text())
+
+    return result
 
 
 def today_weather():
@@ -112,6 +115,8 @@ def today_new():
 
 if __name__ == "__main__":
     # today_weather()
-    # today_english()
-    today_new()
+    data = today_english()
+    x = ("\n".join(str(i) for i in data))
+    send(x)
+    # today_new()
 
