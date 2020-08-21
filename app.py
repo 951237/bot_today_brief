@@ -45,11 +45,10 @@ def today_english():
     return result
 
 
-def today_weather():
+def today_weather(p_url):
     result = []
     result.append("===== 오늘의 날씨 =====")
-    URL = "https://n.weather.naver.com/today/02590140"  # 네이버 날씨
-    soup = create_soup(URL)
+    soup = create_soup(p_url)
     div = soup.find("div", attrs={"class": "today_weather"})  # 날씨 전체 구쳑 선택
     weather_area = div.find("div",
                             attrs={"class": "weather_area"})  # 오늘의 날씨 요약 선택
@@ -119,14 +118,18 @@ def today_news():
 
 
 if __name__ == "__main__":
-    weather_data = today_weather()
-    weather = ("\n".join(str(i) for i in weather_data))
-    send(weather)
+    # URL[0] : 새솔동, URL[1] : 안산시 사동
+    URL = ['https://n.weather.naver.com/today/02590140',
+           'https://n.weather.naver.com/today/02271103']
+    for i in URL:
+        weather_data = today_weather(i)
+        weather = ("\n".join(str(i) for i in weather_data))
+        send(weather)
 
     english_data = today_english()
     english = ("\n".join(str(i) for i in english_data))  # 리스트를 한줄로 출력 "" : 한줄로 이어서, "\n" 줄바꿈으로 출력
     send(english)
 
     news_data = today_news()
-    news = ("\n".join(str(i) for i in news_data))
+    news = ("\n\n".join(str(i) for i in news_data))
     send(news)
