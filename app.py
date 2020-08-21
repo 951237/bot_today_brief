@@ -47,7 +47,7 @@ def today_english():
 
 def today_weather(p_region, p_url):
     result = []
-    result.append(f"===== 오늘의 {p_region}날씨 =====")
+    result.append(f"===== 오늘의 {p_region} 날씨 =====")
     soup = create_soup(p_url)
     div = soup.find("div", attrs={"class": "today_weather"})  # 날씨 전체 구쳑 선택
     weather_area = div.find("div",
