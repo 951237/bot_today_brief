@@ -59,18 +59,21 @@ def today_weather(p_region, p_url):
     current_degree = weather_area.find("strong", attrs={
         "class": "current"
     }).get_text()  # 현재온도
-    degree_height = weather_area.find("strong", attrs={
-        "class": "degree_height"
-    }).get_text()  # 최고온도
-    degree_low = weather_area.find("strong", attrs={
-        "class": "degree_low"
-    }).get_text()  # 최저온도
-    degree_feel = weather_area.find("strong", attrs={
-        "class": "degree_feel"
+    # degree_height = weather_area.find("strong", attrs={
+    #     "class": "degree_height"
+    # }).get_text()  # 최고온도
+    # degree_low = weather_area.find("strong", attrs={
+    #     "class": "degree_low"
+    # }).get_text()  # 최저온도
+    degree_feel = weather_area.find("dd", attrs={
+        "class": "desc_feeling"
     }).get_text()  # 체감온도
+    desc_rainfall = weather_area.find("dd", attrs={
+        "class": "desc_railfall"
+        }).get_text()  # 강수확률
     newline = '\n'
     result.append(
-        f'날씨 요약 : {summary}{newline}오늘의 온도 : {degree_height} / {degree_low} / 체감온도 {degree_feel}')
+        f'날씨 요약 : {summary}{newline}현재 온도 : {current_degree} /  체감온도 : {degree_feel} / 강수확률 : {desc_rainfall}')
 
     ttl_areas = div.find_all('div', attrs={"class": "ttl_area"})  # 세부날씨 정보
     charts = div.find_all('div', attrs={"class": "chart"})  # 세부날씨 수치
@@ -118,7 +121,7 @@ def today_news():
 
 
 if __name__ == "__main__":
-    # URL[0] : 새솔동, URL[1] : 안산시 사
+    # URL[0] : 새솔동, URL[1] : 안산시 사동
     URL = {'새솔동' : 'https://n.weather.naver.com/today/02590140',
            '안산' : 'https://n.weather.naver.com/today/02271103'}
     for k,v in URL.items():
