@@ -6,7 +6,7 @@ name: Python application
 on:
   schedule:
     # 7, 13, 4, 23시 알림
-    - cron:  "32 12 * * *" # 오후 9시 32분
+    - cron:  "00 16 * * *" # 오후 9시 32분
     - cron:  "0 0 * * *" # 아침 9시
     - cron:  "0 4 * * *" # 오후 1시
     - cron:  "0 6 * * *" # 오후 3시
