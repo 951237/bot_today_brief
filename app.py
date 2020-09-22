@@ -99,23 +99,21 @@ def today_weather(p_region, p_url):
 def today_news():
     try:
         result = []
-        result.append("===== 오늘의 뉴스 =====")
+        result.append("===== 이시간 주요 뉴스 =====")
         URL = "https://news.daum.net"
         soup = create_soup(URL)  # 뷰티플 숩 객체 만들기
-        all_pop_cmts = soup.findAll('div', {'class': 'pop_news pop_cmt'})[0]
-        title = all_pop_cmts.find('h3')
-        lis = all_pop_cmts.select('ol > li')
-        result.append(title.text)
+
+        box_headline = soup.find("div", {"class": "box_headline"})
+        lis = box_headline.select('ul > li')
+        print("Daum 이시간 주요 뉴스")
+        i = 1
     
-        for li in lis[:5]:
-            content = li.find_all('span')
-            rank = content[0].text
-            source = content[1].text
+        for li in lis:
+            content = li.find_all('strong')
+            txt = content[0].text.strip().replace('\n'," / ")
             link = li.find('a').get('href')
-            txt = li.text.strip().replace("                    ", "").replace("\n",
-                                                                              "  ").replace(
-                "         ", " :").replace("       ", " /")
-            result.append(f'{txt} / {link}')
+            result.append(f'{i}. {txt} / {link}')
+            i += 1
         result.append("")
     
         return result
