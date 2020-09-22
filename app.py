@@ -113,6 +113,7 @@ def today_news():
         result.append("")
     
         return result
+
     except:
         result = ["오류 : 오늘의 뉴스"]
         return result
@@ -120,8 +121,7 @@ def today_news():
 
 if __name__ == "__main__":
     # URL[0] : 새솔동, URL[1] : 안산시 사동
-    URL = {'새솔동' : 'https://n.weather.naver.com/today/02590140',
-           '안산' : 'https://n.weather.naver.com/today/02271103'}
+    URL = {'새솔동' : 'https://n.weather.naver.com/today/02590140', '안산' : 'https://n.weather.naver.com/today/02271103'}
     for k,v in URL.items():
         weather_data = today_weather(k, v)
         weather = ("\n".join(str(i) for i in weather_data))
