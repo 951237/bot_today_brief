@@ -73,10 +73,12 @@ def today_weather(p_region, p_url):
                 "class": "desc_rainfall"
                 }).get_text()  # 강수확률
             newline = '\n'
-            print(
+            result.append(
                     f'날씨 요약 : {summary}{newline}현재 온도 : {current_degree} /  체감온도 : {degree_feel} / 강수확률 : {desc_rainfall}')
+
         except:
-            result = ["오류 : 오늘의 날씨 요약 부분"]
+            error = "오류 : 오늘의 날씨 요약 부분"
+            result.append(error)
             return result
 
         try:
@@ -97,11 +99,13 @@ def today_weather(p_region, p_url):
 
             newline = '\n'
 
-            print(f'미세먼지 : {dust}({value}) / 초미세먼지 : {cho_dust}({cho_value}) / 자외선 : '
+            result.append(f'미세먼지 : {dust}({value}) / 초미세먼지 : {cho_dust}({cho_value}) / 자외선 : '
                   f'{sun}({sun_value}){newline}')
+            return result
 
         except:
-            result = ["오류 : 오늘의 날씨 세부정보"]
+            error = "오류 : 오늘의 날씨 세부정보"
+            result.append(error)
             return result
 
 # 열독률 높은 뉴스 - 예전 크롤링 기법
@@ -114,7 +118,6 @@ def today_news():
 
         box_headline = soup.find("div", {"class": "box_headline"})
         lis = box_headline.select('ul > li')
-        print("Daum 이시간 주요 뉴스")
         i = 1
     
         for li in lis:
