@@ -19,105 +19,114 @@ def create_soup(p_url):
 
 
 def today_english():
-    result = []
-    result.append("===== 오늘의 영어회화 =====")
-    URL = "https://www.hackers.co.kr/?c=s_eng/eng_contents/I_others_english"
-    soup = create_soup(URL)
-    # 오늘의 회화 주제
-    title = soup.find("div", attrs={"class": "conv_titleTxt"
-                                    }).get_text().strip().replace("\n", "")
-    # 회화 지분 선택(영어, 한글)
-    texts = soup.find_all("div", attrs={"class": "conv_txt"})
-    kor_texts = texts[0].find_all('span', attrs={"class": "conv_sub"})  # 한글 지문
-    eng_texts = texts[1].find_all('span', attrs={"class": "conv_sub"})  # 영어 지문
-    result.append(title)
-    # 영어지문 출력
-    result.append('영어 대화')
-    for txt in eng_texts:
-        result.append(txt.get_text())
-    # result.append()
-
-    # 한글 지문 출력
-    result.append('한글 대화')
-    for txt in kor_texts:
-        result.append(txt.get_text())
-
-    return result
+    try:
+        result = []
+        result.append("===== 오늘의 영어회화 =====")
+        URL = "https://www.hackers.co.kr/?c=s_eng/eng_contents/I_others_english"
+        soup = create_soup(URL)
+        # 오늘의 회화 주제
+        title = soup.find("div", attrs={"class": "conv_titleTxt"
+                                        }).get_text().strip().replace("\n", "")
+        # 회화 지분 선택(영어, 한글)
+        texts = soup.find_all("div", attrs={"class": "conv_txt"})
+        kor_texts = texts[0].find_all('span', attrs={"class": "conv_sub"})  # 한글 지문
+        eng_texts = texts[1].find_all('span', attrs={"class": "conv_sub"})  # 영어 지문
+        result.append(title)
+        # 영어지문 출력
+        result.append('영어 대화')
+        for txt in eng_texts:
+            result.append(txt.get_text())
+        # result.append()
+    
+        # 한글 지문 출력
+        result.append('한글 대화')
+        for txt in kor_texts:
+            result.append(txt.get_text())
+    
+        return result
+    except:
+        print("오류 : 오늘의 영어")
 
 
 def today_weather(p_region, p_url):
-    result = []
-    result.append(f"===== 오늘의 {p_region} 날씨 =====")
-    soup = create_soup(p_url)
-    div = soup.find("div", attrs={"class": "today_weather"})  # 날씨 전체 구쳑 선택
-    weather_area = div.find("div",
-                            attrs={"class": "weather_area"})  # 오늘의 날씨 요약 선택
-    # 날씨 한줄 정리
-    summary = weather_area.find("p", {"class": "summary"
-                                      }).get_text().strip().replace('\n', " / ")
-    # 날씨 상태
-    current_degree = weather_area.find("strong", attrs={
-        "class": "current"
-    }).get_text()  # 현재온도
-    # degree_height = weather_area.find("strong", attrs={
-    #     "class": "degree_height"
-    # }).get_text()  # 최고온도
-    # degree_low = weather_area.find("strong", attrs={
-    #     "class": "degree_low"
-    # }).get_text()  # 최저온도
-    degree_feel = weather_area.find("dd", attrs={
-        "class": "desc_feeling"
-    }).get_text()  # 체감온도
-    desc_rainfall = weather_area.find("dd", attrs={
-        "class": "desc_railfall"
-        }).get_text()  # 강수확률
-    newline = '\n'
-    result.append(
-        f'날씨 요약 : {summary}{newline}현재 온도 : {current_degree} /  체감온도 : {degree_feel} / 강수확률 : {desc_rainfall}')
-
-    ttl_areas = div.find_all('div', attrs={"class": "ttl_area"})  # 세부날씨 정보
-    charts = div.find_all('div', attrs={"class": "chart"})  # 세부날씨 수치
-
-    # 미세먼지
-    dust = ttl_areas[1].find("em", {"class": "level_text"}).get_text()
-    value = charts[0].find("strong", {"class": "value"}).get_text()
-
-    # 초미세먼지
-    cho_dust = ttl_areas[2].find("em", {"class": "level_text"}).get_text()
-    cho_value = charts[1].find("strong", {"class": "value"}).get_text()
-
-    # 자외선
-    sun = ttl_areas[3].find("em", {"class": "level_text"}).get_text()
-    sun_value = charts[2].find("strong", {"class": "value"}).get_text()
-
-    result.append(f'미세먼지 : {dust}({value}) / 초미세먼지 : {cho_dust}({cho_value}) / 자외선 : '
-                  f'{sun}({sun_value}) ')
-    return result
+    try :
+        result = []
+        result.append(f"===== 오늘의 {p_region} 날씨 =====")
+        soup = create_soup(p_url)
+        div = soup.find("div", attrs={"class": "today_weather"})  # 날씨 전체 구쳑 선택
+        weather_area = div.find("div",
+                                attrs={"class": "weather_area"})  # 오늘의 날씨 요약 선택
+        # 날씨 한줄 정리
+        summary = weather_area.find("p", {"class": "summary"
+                                          }).get_text().strip().replace('\n', " / ")
+        # 날씨 상태
+        current_degree = weather_area.find("strong", attrs={
+            "class": "current"
+        }).get_text()  # 현재온도
+        # degree_height = weather_area.find("strong", attrs={
+        #     "class": "degree_height"
+        # }).get_text()  # 최고온도
+        # degree_low = weather_area.find("strong", attrs={
+        #     "class": "degree_low"
+        # }).get_text()  # 최저온도
+        degree_feel = weather_area.find("dd", attrs={
+            "class": "desc_feeling"
+        }).get_text()  # 체감온도
+        desc_rainfall = weather_area.find("dd", attrs={
+            "class": "desc_railfall"
+            }).get_text()  # 강수확률
+        newline = '\n'
+        result.append(
+            f'날씨 요약 : {summary}{newline}현재 온도 : {current_degree} /  체감온도 : {degree_feel} / 강수확률 : {desc_rainfall}')
+    
+        ttl_areas = div.find_all('div', attrs={"class": "ttl_area"})  # 세부날씨 정보
+        charts = div.find_all('div', attrs={"class": "chart"})  # 세부날씨 수치
+    
+        # 미세먼지
+        dust = ttl_areas[1].find("em", {"class": "level_text"}).get_text()
+        value = charts[0].find("strong", {"class": "value"}).get_text()
+    
+        # 초미세먼지
+        cho_dust = ttl_areas[2].find("em", {"class": "level_text"}).get_text()
+        cho_value = charts[1].find("strong", {"class": "value"}).get_text()
+    
+        # 자외선
+        sun = ttl_areas[3].find("em", {"class": "level_text"}).get_text()
+        sun_value = charts[2].find("strong", {"class": "value"}).get_text()
+    
+        result.append(f'미세먼지 : {dust}({value}) / 초미세먼지 : {cho_dust}({cho_value}) / 자외선 : '
+                      f'{sun}({sun_value}) ')
+        return result
+    except:
+        print("오류 : 오늘의 날씨")
 
 
 # 열독률 높은 뉴스 - 예전 크롤링 기법
 def today_news():
-    result = []
-    result.append("===== 오늘의 뉴스 =====")
-    URL = "https://news.daum.net"
-    soup = create_soup(URL)  # 뷰티플 숩 객체 만들기
-    all_pop_cmts = soup.findAll('div', {'class': 'pop_news pop_cmt'})[0]
-    title = all_pop_cmts.find('h3')
-    lis = all_pop_cmts.select('ol > li')
-    result.append(title.text)
-
-    for li in lis[:5]:
-        content = li.find_all('span')
-        rank = content[0].text
-        source = content[1].text
-        link = li.find('a').get('href')
-        txt = li.text.strip().replace("                    ", "").replace("\n",
-                                                                          "  ").replace(
-            "         ", " :").replace("       ", " /")
-        result.append(f'{txt} / {link}')
-    result.append("")
-
-    return result
+    try:
+        result = []
+        result.append("===== 오늘의 뉴스 =====")
+        URL = "https://news.daum.net"
+        soup = create_soup(URL)  # 뷰티플 숩 객체 만들기
+        all_pop_cmts = soup.findAll('div', {'class': 'pop_news pop_cmt'})[0]
+        title = all_pop_cmts.find('h3')
+        lis = all_pop_cmts.select('ol > li')
+        result.append(title.text)
+    
+        for li in lis[:5]:
+            content = li.find_all('span')
+            rank = content[0].text
+            source = content[1].text
+            link = li.find('a').get('href')
+            txt = li.text.strip().replace("                    ", "").replace("\n",
+                                                                              "  ").replace(
+                "         ", " :").replace("       ", " /")
+            result.append(f'{txt} / {link}')
+        result.append("")
+    
+        return result
+    except:
+        print("오류 : 오늘의 날씨")
 
 
 if __name__ == "__main__":
