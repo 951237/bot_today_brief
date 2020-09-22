@@ -45,8 +45,8 @@ def today_english():
     
         return result
     except:
-        result = ["오류 : 오늘의 영어"]
-        return result
+        error = ["오류 : 오늘의 영어"]
+        return error
 
 
 def today_weather(p_region, p_url):
@@ -63,25 +63,14 @@ def today_weather(p_region, p_url):
             summary = weather_area.find("p", {"class": "summary"
                                               }).get_text().strip().replace('\n', " / ")
             # 날씨 상태
-            current_degree = weather_area.find("strong", attrs={
-                "class": "current"
-                }).get_text()  # 현재온도
-            degree_feel = weather_area.find("dd", attrs={
-                "class": "desc_feeling"
-                }).get_text()  # 체감온도
-            desc_rainfall = weather_area.find("dd", attrs={
-                "class": "desc_rainfall"
-                }).get_text()  # 강수확률
+            current_degree = weather_area.find("strong", attrs={"class": "current"}).get_text()  # 현재온도
+            degree_feel = weather_area.find("dd", attrs={"class": "desc_feeling"}).get_text()  # 체감온도
+            desc_rainfall = weather_area.find("dd", attrs={"class": "desc_rainfall"}).get_text()  # 강수확률
             newline = '\n'
             result.append(
                     f'날씨 요약 : {summary}{newline}현재 온도 : {current_degree} /  체감온도 : {degree_feel} / 강수확률 : {desc_rainfall}')
 
-        except:
-            error = "오류 : 오늘의 날씨 요약 부분"
-            result.append(error)
-            return result
 
-        try:
             ttl_areas = div.find_all('div', attrs={"class": "ttl_area"})  # 세부날씨 정보
             charts = div.find_all('div', attrs={"class": "chart"})  # 세부날씨 수치
 
@@ -99,14 +88,12 @@ def today_weather(p_region, p_url):
 
             newline = '\n'
 
-            result.append(f'미세먼지 : {dust}({value}) / 초미세먼지 : {cho_dust}({cho_value}) / 자외선 : '
-                  f'{sun}({sun_value}){newline}')
+            result.append(f'미세먼지 : {dust}({value}) / 초미세먼지 : {cho_dust}({cho_value}) / 자외선 : 'f'{sun}({sun_value}){newline}')
             return result
 
         except:
-            error = "오류 : 오늘의 날씨 세부정보"
-            result.append(error)
-            return result
+            error = ["오류 : 오늘의 날씨 세부정보"]
+            return error
 
 # 열독률 높은 뉴스 - 예전 크롤링 기법
 def today_news():
