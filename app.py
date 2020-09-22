@@ -63,17 +63,11 @@ def today_weather(p_region, p_url):
         current_degree = weather_area.find("strong", attrs={
             "class": "current"
         }).get_text()  # 현재온도
-        # degree_height = weather_area.find("strong", attrs={
-        #     "class": "degree_height"
-        # }).get_text()  # 최고온도
-        # degree_low = weather_area.find("strong", attrs={
-        #     "class": "degree_low"
-        # }).get_text()  # 최저온도
         degree_feel = weather_area.find("dd", attrs={
             "class": "desc_feeling"
         }).get_text()  # 체감온도
         desc_rainfall = weather_area.find("dd", attrs={
-            "class": "desc_railfall"
+            "class": "desc_rainfall"
             }).get_text()  # 강수확률
         newline = '\n'
         result.append(
