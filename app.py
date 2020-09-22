@@ -45,7 +45,8 @@ def today_english():
     
         return result
     except:
-        print("오류 : 오늘의 영어")
+        result = ["오류 : 오늘의 영어"]
+        return result
 
 
 def today_weather(p_region, p_url):
@@ -56,44 +57,52 @@ def today_weather(p_region, p_url):
         div = soup.find("div", attrs={"class": "today_weather"})  # 날씨 전체 구쳑 선택
         weather_area = div.find("div",
                                 attrs={"class": "weather_area"})  # 오늘의 날씨 요약 선택
-        # 날씨 한줄 정리
-        summary = weather_area.find("p", {"class": "summary"
-                                          }).get_text().strip().replace('\n', " / ")
-        # 날씨 상태
-        current_degree = weather_area.find("strong", attrs={
-            "class": "current"
-        }).get_text()  # 현재온도
-        degree_feel = weather_area.find("dd", attrs={
-            "class": "desc_feeling"
-        }).get_text()  # 체감온도
-        desc_rainfall = weather_area.find("dd", attrs={
-            "class": "desc_rainfall"
-            }).get_text()  # 강수확률
-        newline = '\n'
-        result.append(
-            f'날씨 요약 : {summary}{newline}현재 온도 : {current_degree} /  체감온도 : {degree_feel} / 강수확률 : {desc_rainfall}')
-    
-        ttl_areas = div.find_all('div', attrs={"class": "ttl_area"})  # 세부날씨 정보
-        charts = div.find_all('div', attrs={"class": "chart"})  # 세부날씨 수치
-    
-        # 미세먼지
-        dust = ttl_areas[1].find("em", {"class": "level_text"}).get_text()
-        value = charts[0].find("strong", {"class": "value"}).get_text()
-    
-        # 초미세먼지
-        cho_dust = ttl_areas[2].find("em", {"class": "level_text"}).get_text()
-        cho_value = charts[1].find("strong", {"class": "value"}).get_text()
-    
-        # 자외선
-        sun = ttl_areas[3].find("em", {"class": "level_text"}).get_text()
-        sun_value = charts[2].find("strong", {"class": "value"}).get_text()
-    
-        result.append(f'미세먼지 : {dust}({value}) / 초미세먼지 : {cho_dust}({cho_value}) / 자외선 : '
-                      f'{sun}({sun_value}) ')
-        return result
-    except:
-        print("오류 : 오늘의 날씨")
 
+        try:
+            # 날씨 한줄 정리
+            summary = weather_area.find("p", {"class": "summary"
+                                              }).get_text().strip().replace('\n', " / ")
+            # 날씨 상태
+            current_degree = weather_area.find("strong", attrs={
+                "class": "current"
+                }).get_text()  # 현재온도
+            degree_feel = weather_area.find("dd", attrs={
+                "class": "desc_feeling"
+                }).get_text()  # 체감온도
+            desc_rainfall = weather_area.find("dd", attrs={
+                "class": "desc_rainfall"
+                }).get_text()  # 강수확률
+            newline = '\n'
+            print(
+                    f'날씨 요약 : {summary}{newline}현재 온도 : {current_degree} /  체감온도 : {degree_feel} / 강수확률 : {desc_rainfall}')
+        except:
+            result = ["오류 : 오늘의 날씨 요약 부분"]
+            return result
+
+        try:
+            ttl_areas = div.find_all('div', attrs={"class": "ttl_area"})  # 세부날씨 정보
+            charts = div.find_all('div', attrs={"class": "chart"})  # 세부날씨 수치
+
+            # 미세먼지
+            dust = ttl_areas[0].find("em", {"class": "level_text"}).get_text()
+            value = charts[0].find("strong", {"class": "value"}).get_text()
+
+            # 초미세먼지
+            cho_dust = ttl_areas[1].find("em", {"class": "level_text"}).get_text()
+            cho_value = charts[1].find("strong", {"class": "value"}).get_text()
+
+            # 자외선
+            sun = ttl_areas[2].find("em", {"class": "level_text"}).get_text()
+            sun_value = charts[2].find("strong", {"class": "value"}).get_text()
+
+            newline = '\n'
+
+            print(f'미세먼지 : {dust}({value}) / 초미세먼지 : {cho_dust}({cho_value}) / 자외선 : '
+                  f'{sun}({sun_value}){newline}')
+
+        except:
+            result = ["오류 : 오늘의 날씨 세부정보"]
+            return result
 
 # 열독률 높은 뉴스 - 예전 크롤링 기법
 def today_news():
@@ -118,7 +127,8 @@ def today_news():
     
         return result
     except:
-        print("오류 : 오늘의 날씨")
+        result = ["오류 : 오늘의 뉴스"]
+        return result
 
 
 if __name__ == "__main__":
