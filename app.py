@@ -55,20 +55,17 @@ def today_weather(p_region, p_url):
         result.append(f"===== 오늘의 {p_region} 날씨 =====")
         soup = create_soup(p_url)
         div = soup.find("div", attrs={"class": "today_weather"})  # 날씨 전체 구쳑 선택
-        weather_area = div.find("div",
-                                attrs={"class": "weather_area"})  # 오늘의 날씨 요약 선택
+        weather_area = div.find("div", attrs={"class": "weather_area"})  # 오늘의 날씨 요약 선택
 
         try:
             # 날씨 한줄 정리
-            summary = weather_area.find("p", {"class": "summary"
-                                              }).get_text().strip().replace('\n', " / ")
+            summary = weather_area.find("p", {"class": "summary"}).get_text().strip().replace('\n', " / ")
             # 날씨 상태
             current_degree = weather_area.find("strong", attrs={"class": "current"}).get_text()  # 현재온도
             degree_feel = weather_area.find("dd", attrs={"class": "desc_feeling"}).get_text()  # 체감온도
             desc_rainfall = weather_area.find("dd", attrs={"class": "desc_rainfall"}).get_text()  # 강수확률
             newline = '\n'
-            result.append(
-                    f'날씨 요약 : {summary}{newline}현재 온도 : {current_degree} /  체감온도 : {degree_feel} / 강수확률 : {desc_rainfall}')
+            result.append(f'날씨 요약 : {summary}{newline}현재 온도 : {current_degree} /  체감온도 : {degree_feel} / 강수확률 : {desc_rainfall}')
 
 
             ttl_areas = div.find_all('div', attrs={"class": "ttl_area"})  # 세부날씨 정보
