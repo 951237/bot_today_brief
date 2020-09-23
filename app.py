@@ -93,7 +93,6 @@ def today_weather(p_region, p_url):
 
 
 # 열독률 높은 뉴스 - 예전 크롤링 기법
-
 def today_news():
     try:
         result = []
